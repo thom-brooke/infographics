@@ -1,0 +1,31 @@
+<?xml version="1.0" ?>
+<svg height="12cm" version="1.1" viewBox="0 0 1200 1200" width="12cm" xmlns="http://www.w3.org/2000/svg">
+  <g stroke="white" stroke-width="10">
+    <style>.title {font-family:sans-serif;font-weight:bold;font-size:83px;dominant-baseline:middle;text-anchor:middle;stroke:none;fill:black;}
+.label {font-family:sans-serif;font-weight:bold;font-size:83px;dominant-baseline:middle;text-anchor:middle;stroke:none;fill:white;}</style>
+    <g>
+      <path d="M 600,600 L 600.0,0.0 A 600,600 0 0,1 1119.6152422706632,899.9999999999999 Z" fill="red"/>
+      <text class="label" transform="translate(937.749907475931 405.0) rotate(0)" x="0" y="0">fee</text>
+    </g>
+    <g>
+      <path d="M 600,600 L 1119.6152422706632,899.9999999999999 A 600,600 0 0,1 247.32884862451618,1085.4101966249684 Z" fill="blue"/>
+      <text class="label" transform="translate(681.0855594189262 981.4775642861841) rotate(0)" x="0" y="0">fi</text>
+    </g>
+    <g>
+      <path d="M 600,600 L 247.32884862451618,1085.4101966249684 A 600,600 0 0,1 29.366090222907815,414.58980337503164 Z" fill="green"/>
+      <text class="label" transform="translate(229.08795864489014 720.5166278062295) rotate(0)" x="0" y="0">fo</text>
+    </g>
+    <g>
+      <path d="M 600,600 L 29.366090222907815,414.58980337503164 A 600,600 0 0,1 355.9580141545199,51.8727254144394 Z" fill="orange"/>
+      <text class="label" transform="translate(310.17351806381623 339.03906352004526) rotate(0)" x="0" y="0">fum</text>
+    </g>
+    <g>
+      <path d="M 600,600 L 355.9580141545199,51.8727254144394 A 600,600 0 0,1 599.9999999999999,0.0 Z" fill="teal"/>
+      <text class="label" transform="translate(518.914440581074 218.52243571381575) rotate(78.00000000000006)" x="0" y="0">doh!</text>
+    </g>
+    <g>
+      <circle cx="600" cy="600" fill="silver" r="180"/>
+      <text class="title" x="600" y="600">Test</text>
+    </g>
+  </g>
+</svg>
