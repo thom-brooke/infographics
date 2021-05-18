@@ -1,20 +1,20 @@
-# infographics
+# Infographics
 
 A Python package for generating basic infographic charts.
 
 This is by no means a complete implementation.  In fact, it's rather limited.  How limited?  At this point it only generates Pie and Donut charts.  That's ... pretty limited -- especially considering the broad range of data visualization tools that most people expect in an infographic.
 
-It all started with Donut charts, because there was a pressing need for them.  But it was obvious early on that more _might_ be coming, and that establishing a foundation which could support multiple charts and graphics made sense.
+It all started with Donut charts, because there was a pressing need for them.  But it was obvious early on that more chart types _might_ be coming, and that establishing a foundation which could support multiple charts and graphics made sense.
 
-So that's why there's all this infrastructure around one, simple chart type.
+So that's why there's all this infrastructure around one simple chart type.
 
 In a nutshell:
 
 * An infographic is a `Canvas` on which various charts (and other drawing objects) are placed.
 * A Chart is a self-contained graphic, typically representing some data in an intuitive way.
+* Charts are generated for specific datasets based on some _style_, in order to maintain consistency.
 * A Donut chart is a circular Pie chart with a title in the middle.
 * (A Pie chart is a Donut chart with no hole)
-* Charts are generated for specific datasets based on some _style_, in order to maintain consistency.
 
 All of this happens in SVG.
 
@@ -24,7 +24,11 @@ The canvas and charts are expected to be generated programmatically. While it is
 
 At this point, it's source-based only.
 
-Details TBS.
+So, either run your scripts from a location containing the `infographics` package (e.g., from the same place as this README file), or download and install using `pip` locally:
+```
+$ pip install -e infographics
+```
+Omit the `-e` option if you don't need to edit the modules.
 
 ## Examples
 
@@ -34,7 +38,7 @@ TBS.
 
 Different SVG rendering libraries work differently.
 
-For example, `librsvg` (as of Apr 2021) does not support the "dominant-baseline" attribute for text elements (TBR).  Which means that a label which is _supposed_ to be centered vertically on a reference line is instead aligned on its baseline (making it appear slightly "higher" than it should).
+For example, some do not support the "dominant-baseline" attribute for text elements.  Which means that a label which is _supposed_ to be centered vertically on a reference line is instead aligned on its baseline (making it appear slightly "higher" than it should).
 
 ## Usage
 

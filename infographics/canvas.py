@@ -1,11 +1,5 @@
 """SVG "container" for charts.
 
-just an extent.
-
-add charts (or other SVG drawing objects) to it.
-
-output to file.
-
 This module is written in/for Python3, although it can probably be used in Python2
 with little modification.  The biggest incompatibility is string formatting.
 
@@ -24,33 +18,58 @@ from xml.dom import minidom
 # make this a class (derived from ET.Element) for introspection (TBR).
 # (e.g., examining the width/height/view-box/etc. after it's created)
 class Canvas:
+    """An extent (e.g., page) to hold charts and things.
 
-    def __init__(self, width_cm, height_cm, scale=100):
+    A Canvas is really just a container to keep all your charts from falling on the floor.  
+    Once you have a Canvas, you can add charts (or other drawing objects) to it, and you
+    can save it to a file, and an SVG drawing.
+
+    Members:
+    width  -- the overall canvas width, in user coordinates.
+    height -- the overall canvas height, in user coordinates.
+    svg    -- an "svg" root element, containing all the drawing objects on the canvas.
+
+    Methods:
+    add_graphic -- place an SVG sub-object onto the canvas.
+    write       -- save the canvas to a file, as SVG.
+    """
+
+    def __init__(self, width, height, units="cm", px_scale=1):
         """Create an empty top-level SVG element, on which to place other drawing elements.
     
         Arguments:  
-        width_cm  -- the width of the canvas (in cm)  
-        height_cm -- the height of the canvas (in cm)
-
-        Keyword Arguments:  
-        scale -- the px-per-cm scale (default 100)
+        width  -- the width of the canvas (in `units`)  
+        height -- the height of the canvas (in `units`)
         
-        The constructed `svg` element includes the `xmlns` attribute,
-        along with the canvas physical size (from `width_cm` and
-        `height_cm`), and the `viewBox` coordinates (using `scale`).
+        Keyword Arguments:  
+        px_scale -- the px-per-unit scale (default 1)
+        units    -- SVG dimension for `width` and `height` (default "cm:")
 
-        The use of cm as the dimension unit is arbitrary.  It could
-        just as easily have been "in" and "dpi".
+        The constructed `svg` element includes the `xmlns` attribute,
+        along with the canvas physical size (from `width`, `height`, and `units`), 
+        and the `viewBox` coordinates (from `width`, `height`, and `px_scale`).
+
+        Valid SVG dimensions are:
+        * "cm" -- Centimeters
+        * "in" -- Inches
+        * "mm" -- Millimeters
+        * "pc" -- Picas (1/6 inch)
+        * "pt" -- [Big] Points (1/72 inch)
+        * "px" -- Pixels
+
+        Also valid, but likely not very useful (since no font is defined) are:
+        * "em" -- One 'em', or about the size of the font.
+        * "ex" -- One 'ex`, or about the width of a lower case 'x' in the font.
         """
         # in "user" units:
-        self.width = scale*width_cm
-        self.height = scale*height_cm
+        self.width = px_scale*width
+        self.height = px_scale*height
         # create the XML tree and root svg element:
         self.svg = ET.Element("svg")
         self.svg.set("xmlns", "http://www.w3.org/2000/svg")
         self.svg.set("version", "1.1")
-        self.svg.set("width", f"{width_cm}cm")
-        self.svg.set("height", f"{height_cm}cm")
+        self.svg.set("width", f"{width}{units}")
+        self.svg.set("height", f"{height}{units}")
         self.svg.set("viewBox", f"0 0 {self.width} {self.height}")
 
     def __repr__(self):
@@ -85,7 +104,6 @@ class Canvas:
         attribute.  If only one is provided, the other will be derived
         from the `viewBox` of the object, such that the aspect ratio
         is maintained.  This prevents [mis]alignment artifacts.
-
         """
         if svg.tag != 'svg':
             raise ValueError("Non-SVG argument")
