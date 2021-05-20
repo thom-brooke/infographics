@@ -123,14 +123,14 @@ class DonutStyle:
         * The weight of the wedge (numeric)
         * The label for the wedge (string)
         * A dict with label presentation options:
-            - "dx" (px): nudge the label location a little on the x-axis
-            - "dy" (px): nudge the label location a little on the y-axis
+            - "dx" (px): nudge the label location a little on the baseline
+            - "dy" (px): nudge the label location a little on above/below the baseline
             - "rotate" (boolean): Align the label along the center radial through the wedge.
         
         By default, labels are aligned horizontally and centered within the wedge 
         (where "centered" here means midway along the center radial, between the 
-        hole and the edge). The nudge values (dx, dy) are relative to the chart size 
-        (so 0.01 would be 1%).
+        hole and the edge). The nudge values (dx, dy) are relative to the label font size 
+        (so 1.0 would be roughly 1 em), and apply along the x/y axes of the label. 
 
         For example, a single wedge element might be: `(25, "fred", {'rotate': True})'
         Which means the wedge has a weight of 25, with the label "fred", which is rotated 
@@ -161,8 +161,10 @@ class DonutStyle:
         chart.set("stroke-width", str(self.border_size * self._size))
 
         styles = ET.Element("style")
-        font_title = self.fontspec.format(cls="title", size=(self.title_size * self._size), color=self.title_color)
-        font_label = self.fontspec.format(cls="label", size=(self.label_size * self._size), color=self.label_color)
+        title_size = (self.title_size * self._size)
+        label_size = (self.label_size * self._size)
+        font_title = self.fontspec.format(cls="title", size=title_size, color=self.title_color)
+        font_label = self.fontspec.format(cls="label", size=label_size, color=self.label_color)
         styles.text = "\n".join((font_title, font_label))
         chart.append(styles)
         
@@ -192,21 +194,23 @@ class DonutStyle:
 
             # The label goes in the center: halfway along the mid-angle between the hole and the edge.
             bisect = (prior_angle + angle)/2
-
-            # ... but "nudged" a little by the opts
-            dx = center.x + r_text*cos(bisect) + (opts.get("dx", 0) * self._size)
-            dy = center.y + r_text*sin(bisect) + (opts.get("dy", 0) * self._size)
-            # ... and rotated along the center line by the opts
+            cx = center.x + (r_text * cos(bisect)) 
+            cy = center.y + (r_text * sin(bisect))
+            # ... but rotated along the center line by the opts
             rotate = opts.get('rotate', False)
             text_angle = degrees(bisect) if rotate else 0
             if not (-90 < text_angle < 90):
                 text_angle -= 180 
-            
+            # ... and "nudged" a little by the ops
+            nudge_x = opts.get("dx", 0) * label_size
+            nudge_y = opts.get("dy", 0) * label_size
+            dx = nudge_x * cos(text_angle) + nudge_y * cos(pi/2 + text_angle)
+            dy = nudge_x * sin(text_angle) + nudge_y * sin(pi/2 + text_angle)
             label = ET.Element("text")
             label.set("x", "0")
             label.set("y", "0")
             label.set("class", "label")
-            label.set("transform", f"translate({str(dx)} {str(dy)}) rotate({text_angle})")
+            label.set("transform", f"translate({str(cx+dx)} {str(cy+dy)}) rotate({text_angle})")
             label.text = name
             item.append(label)
 
@@ -223,7 +227,8 @@ class DonutStyle:
             hole.set("r", str(int((self.hole_size * self._size)/2)))
             hole.set("fill", self.hole_color)
             item.append(hole)
-        
+
+            # there is no "nudge" for the title.  should there be?
             label = ET.Element("text")
             label.set("x", str(center.x))
             label.set("y", str(center.y))
@@ -265,6 +270,6 @@ def make_graphic(chart, filename, width_cm):
 
     As donut/pie charts are square, the height is implied.
     """
-    page = Canvas(width_cm=width_cm, height_cm=width_cm)
+    page = Canvas(width=width_cm, height=width_cm, units="cm")
     page.add_graphic(chart)
     page.write(filename)
