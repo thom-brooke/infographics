@@ -30,6 +30,12 @@ $ pip install -e infographics
 ```
 Omit the `-e` option if you don't need to edit the modules.
 
+Run tests from the project directory (i.e., here):
+```
+$ python -m unittest
+```
+
+
 ## Examples
 
 TBS.
