@@ -76,21 +76,44 @@ donuts.make_graphic(chart, "ex-basic.svg", width_cm=10)
 
 The resulting file can be viewed with any reasonable SVG library or application: Chrome, Firefox, Inkscape, gThumb -- even emacs. Note that you need to provide the actual graphic size, in cm; here's what it looks like:
 
-![exbasic](docs/figures/ex-basic.svg)
+![ex-basic](docs/figures/ex-basic.svg)
 
 What about those "presentation options"?
 
 Suppose the data had a skinny slice:
 ```
 data.append( (5, "smell", {}) )
+chart = style.generate(data, title="Giant")
+donuts.make_graphic(chart, "ex-labels.svg", width_cm=10)
 ```
 
+The label here is a little long, and extends beyond the thin wedge.  That's ugly; one presentation option is to _rotate_ the label:
+```
+data[4] = (5, "smell", {"rotate": True})
+chart = style.generate(data, title="Giant")
+donuts.make_graphic(chart, "ex-labels.svg", width_cm=10)
+```
 
-... data with narrow wedge.  rotation.
+Better, but the label is a little crowded towards the center of the chart.  Other presentation options let you "nudge" the label a little bit in the x or y directions.  Note that the axes are relative to the text, not the chart.  So +x is to the right _along the text baseline_, and -x is to the left; +y is "down", perpendicular to the text baseline, and -y is "up".  Here, we'd like to slide the label a little closer to the outer edge:
+```
+data[4] = (5, "smell", {"rotate": True, "dx":-0.5})
+chart = style.generate(data, title="Giant")
+donuts.make_graphic(chart, "ex-labels.svg", width_cm=10)
+```
 
-... nudge
+A nudge is relative to the font size.  So, a nudge of "1" is roughly 1 em.
+And the whole progression looks something like this:
 
-... mk_wedge
+![ex-labels](docs/figures/ex-labels.svg)
+
+Remembering how to format the data items with their presentation options can be ... tedious.  There is a convenience function for that:
+```
+item1 = donuts.mk_wedge(25, "Fred")
+item2 = donuts.mk_wedge(5, "Barney", rotate=True, dx=-0.5)
+# or:
+data = [ mk_wedge(25, "George"), mk_wedge(5, "Jane", rotate=True) ]
+```
+
 
 ### Customization
 lots of wedges; colors repeat
