@@ -2,7 +2,7 @@
 
 A Python package for generating basic infographic charts.
 
-This is by no means a complete implementation.  In fact, it's rather limited.  How limited?  At this point it only generates Pie and Donut charts.  That's ... pretty limited -- especially considering the broad range of data visualization tools that most people expect in an infographic.
+This is by no means a complete implementation.  In fact, it's rather limited.  How limited?  At this point it only generates Pie and Donut charts.  That's ... pretty limited -- especially considering the broad range of data visualization representations that most people expect in an infographic.
 
 It all started with Donut charts, because there was a pressing need for them.  But it was obvious early on that more chart types _might_ be coming, and that establishing a foundation which could support multiple charts and graphics made sense.
 
@@ -18,7 +18,7 @@ In a nutshell:
 
 All of this happens in SVG.
 
-The canvas and charts are expected to be generated programmatically. While it is possible to add pre-rendered elements to a canvas, it's probably easier to just create the desired graphic in an SVG editor, like [Inkscape](https://inkscape.org).
+The canvas and charts are expected to be generated programmatically. While it is possible to add pre-rendered elements to a canvas, it's probably easier to just create the desired graphic in an SVG editor, like [Inkscape](https://inkscape.org), in the first place.
 
 ## Installation
 
@@ -36,9 +36,71 @@ $ python -m unittest
 ```
 
 
-## Examples
+## Usage
 
-TBS.
+All of the examples here may be found in the `examples` directory.
+
+For clarity, the following examples always refer to the infographics through their modules:
+```
+from infographics import canvas, donuts
+```
+You may, of course, choose to import 
+
+### Basics
+Charts are based on a _style_, so that multiple charts can be created with a consistent look and feel:
+```
+style = donuts.DonutStyle()
+```
+
+A chart is _generated_ from the style, using a dataset containing, well, the data:
+```
+data = [ (25, "Fee", {}), (25, "Fi", {}), (25, "Fo", {}), (25, "Fum", {}) ]
+
+chart = style.generate(data, title="Giant")
+```
+
+For a donut chart, the dataset is a list-like object containing one element for each wedge.  Each element is a list-like object consisting of a _weight_, a _label_ (which may be blank), and a presentation _options_ dict (which usually is blank).
+
+The above chart has four wedges, each with a weight of 25.  The size of each wedge is relative to the total weight of all the data items.  In this case, the total weight is 100, and each wedge is then 25/100 of the whole donut/pie -- or 1/4.  If one wedge were, say, 50 instead, it would be twice as large as the others: 2/5 of the donut (50/125).
+
+Each label is centered in its wedge, and adjusted by the presentation options.  Here, none of the labels have presentation options, so they are rendered horizontally and centered.
+
+So how do you see the results?
+
+A chart is just an `xml.etree.ElementTree` containing a single `svg` element.  You can use any library or tool that can render the svg element.  Setting up such a toolchain, however, is a fiddly business, and if you don't have one in place already, it's probably not worth the effort.
+
+Fortunately, a chart may be saved directly to a file:
+```
+donuts.make_graphic(chart, "ex-basic.svg", width_cm=10)
+```
+
+The resulting file can be viewed with any reasonable SVG library or application: Chrome, Firefox, Inkscape, gThumb -- even emacs. (Note that you need to provide the actual graphic size, in cm)
+
+What about those "presentation options"?
+
+... data with narrow wedge.  rotation.
+
+... nudge
+
+... mk_wedge
+
+### Customization
+lots of wedges; colors repeat
+
+tailoring the chart style.  sizes, colors, start angle
+
+pie charts
+
+### Composition
+putting multiple charts together: the canvas
+
+### Annotations
+chart itself is svg element; canvas.svg member; can add elements manually (e.g., automation)
+
+for one-off, better to use an editor
+
+editing canvas and chart in Inkscape; adding charts to non-canvas drawings
+
 
 ## Considerations
 
@@ -46,7 +108,7 @@ Different SVG rendering libraries work differently.
 
 For example, some do not support the "dominant-baseline" attribute for text elements.  Which means that a label which is _supposed_ to be centered vertically on a reference line is instead aligned on its baseline (making it appear slightly "higher" than it should).
 
-## Usage
+## Reference
 
 ### Canvas
 The "canvas" is the sheet/page/container into which charts (etc.) are placed.

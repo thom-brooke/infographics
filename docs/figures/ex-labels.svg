@@ -1,0 +1,33 @@
+<?xml version="1.0" ?>
+<svg height="10cm" version="1.1" viewBox="0 0 10 10" width="10cm" xmlns="http://www.w3.org/2000/svg">
+  <svg viewBox="0 0 1000 1000" x="0" y="0">
+    <g stroke="white" stroke-width="10.0">
+      <style>.title {font-family:sans-serif;font-weight:bold;font-size:80.0px;dominant-baseline:middle;text-anchor:middle;stroke:none;fill:black;}
+.label {font-family:sans-serif;font-weight:bold;font-size:80.0px;dominant-baseline:middle;text-anchor:middle;stroke:none;fill:white;}</style>
+      <g>
+        <path d="M 500,500 L 500.00000000000006,0.0 A 500,500 0 0,1 998.60189859059,462.6349532067878 Z" fill="red"/>
+        <text class="label" transform="translate(721.0561397755488 261.7581416553064) rotate(0)" x="0" y="0">Fee</text>
+      </g>
+      <g>
+        <path d="M 500,500 L 998.60189859059,462.6349532067878 A 500,500 0 0,1 574.5211330880874,994.4154131125642 Z" fill="blue"/>
+        <text class="label" transform="translate(754.0952318021098 702.6341856040883) rotate(0)" x="0" y="0">Fi</text>
+      </g>
+      <g>
+        <path d="M 500,500 L 574.5211330880874,994.4154131125642 A 500,500 0 0,1 12.536043909088164,611.2604669781573 Z" fill="green"/>
+        <text class="label" transform="translate(316.92098112932297 768.5276016526984) rotate(0)" x="0" y="0">Fo</text>
+      </g>
+      <g>
+        <path d="M 500,500 L 12.536043909088164,611.2604669781573 A 500,500 0 0,1 352.6224127945477,22.21359710692974 Z" fill="orange"/>
+        <text class="label" transform="translate(218.5417437700574 337.5000000000001) rotate(0)" x="0" y="0">Fum</text>
+      </g>
+      <g>
+        <path d="M 500,500 L 352.6224127945477,22.21359710692974 A 500,500 0 0,1 499.9999999999999,0.0 Z" fill="teal"/>
+        <text class="label" transform="translate(445.599572845696 139.07674842782814) rotate(81.42857142857139)" x="0" y="0">smell</text>
+      </g>
+      <g>
+        <circle cx="500" cy="500" fill="silver" r="150"/>
+        <text class="title" x="500" y="500">Giant</text>
+      </g>
+    </g>
+  </svg>
+</svg>

@@ -1,0 +1,29 @@
+<?xml version="1.0" ?>
+<svg height="10cm" version="1.1" viewBox="0 0 10 10" width="10cm" xmlns="http://www.w3.org/2000/svg">
+  <svg viewBox="0 0 1000 1000" x="0" y="0">
+    <g stroke="white" stroke-width="10.0">
+      <style>.title {font-family:sans-serif;font-weight:bold;font-size:80.0px;dominant-baseline:middle;text-anchor:middle;stroke:none;fill:black;}
+.label {font-family:sans-serif;font-weight:bold;font-size:80.0px;dominant-baseline:middle;text-anchor:middle;stroke:none;fill:white;}</style>
+      <g>
+        <path d="M 500,500 L 500.00000000000006,0.0 A 500,500 0 0,1 1000.0,500.0 Z" fill="red"/>
+        <text class="label" transform="translate(729.809703885628 270.1902961143721) rotate(0)" x="0" y="0">Fee</text>
+      </g>
+      <g>
+        <path d="M 500,500 L 1000.0,500.0 A 500,500 0 0,1 500.00000000000006,1000.0 Z" fill="blue"/>
+        <text class="label" transform="translate(729.809703885628 729.8097038856279) rotate(0)" x="0" y="0">Fi</text>
+      </g>
+      <g>
+        <path d="M 500,500 L 500.00000000000006,1000.0 A 500,500 0 0,1 0.0,500.00000000000006 Z" fill="green"/>
+        <text class="label" transform="translate(270.1902961143721 729.809703885628) rotate(0)" x="0" y="0">Fo</text>
+      </g>
+      <g>
+        <path d="M 500,500 L 0.0,500.00000000000006 A 500,500 0 0,1 499.9999999999999,0.0 Z" fill="orange"/>
+        <text class="label" transform="translate(270.190296114372 270.1902961143721) rotate(0)" x="0" y="0">Fum</text>
+      </g>
+      <g>
+        <circle cx="500" cy="500" fill="silver" r="150"/>
+        <text class="title" x="500" y="500">Giant</text>
+      </g>
+    </g>
+  </svg>
+</svg>

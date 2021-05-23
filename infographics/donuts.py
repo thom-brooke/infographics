@@ -199,13 +199,16 @@ class DonutStyle:
             # ... but rotated along the center line by the opts
             rotate = opts.get('rotate', False)
             text_angle = degrees(bisect) if rotate else 0
+            # ... keep text right-side up; reflect angle at y-axis
+            flip_xy = 1
             if not (-90 < text_angle < 90):
-                text_angle -= 180 
-            # ... and "nudged" a little by the ops
-            nudge_x = opts.get("dx", 0) * label_size
-            nudge_y = opts.get("dy", 0) * label_size
-            dx = nudge_x * cos(text_angle) + nudge_y * cos(pi/2 + text_angle)
-            dy = nudge_x * sin(text_angle) + nudge_y * sin(pi/2 + text_angle)
+                text_angle -= 180
+                flip_xy = -1
+            # ... and "nudged" a little by the opts
+            nudge_x = (opts.get("dx", 0) * label_size) * flip_xy
+            nudge_y = (opts.get("dy", 0) * label_size) * flip_xy
+            dx = nudge_x * cos(bisect) + nudge_y * cos(pi/2 + bisect)
+            dy = nudge_x * sin(bisect) + nudge_y * sin(pi/2 + bisect)
             label = ET.Element("text")
             label.set("x", "0")
             label.set("y", "0")
