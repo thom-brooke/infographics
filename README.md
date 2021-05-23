@@ -67,16 +67,24 @@ Each label is centered in its wedge, and adjusted by the presentation options.  
 
 So how do you see the results?
 
-A chart is just an `xml.etree.ElementTree` containing a single `svg` element.  You can use any library or tool that can render the svg element.  Setting up such a toolchain, however, is a fiddly business, and if you don't have one in place already, it's probably not worth the effort.
+A chart is just an `xml.etree.ElementTree` containing a single `svg` element.  You can use any library or tool that can render the svg element.  Setting up such a toolchain in python, however, is a fiddly business, and if you don't have one in place already, it's probably not worth the effort.
 
 Fortunately, a chart may be saved directly to a file:
 ```
 donuts.make_graphic(chart, "ex-basic.svg", width_cm=10)
 ```
 
-The resulting file can be viewed with any reasonable SVG library or application: Chrome, Firefox, Inkscape, gThumb -- even emacs. (Note that you need to provide the actual graphic size, in cm)
+The resulting file can be viewed with any reasonable SVG library or application: Chrome, Firefox, Inkscape, gThumb -- even emacs. Note that you need to provide the actual graphic size, in cm; here's what it looks like:
+
+![exbasic](docs/figures/ex-basic.svg)
 
 What about those "presentation options"?
+
+Suppose the data had a skinny slice:
+```
+data.append( (5, "smell", {}) )
+```
+
 
 ... data with narrow wedge.  rotation.
 
@@ -143,5 +151,5 @@ generating a chart.  datasets.  labels and text.
 
 convenience function to fit and write a canvas to a chart
 
-Here's an example:  
-![generated](./docs/figures/test-chart.svg)
+
+![test](docs/figures/test-chart.svg)
