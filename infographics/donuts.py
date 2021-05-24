@@ -16,10 +16,20 @@ All depenedencies are available in the standard distribution:
 """
 
 import xml.etree.ElementTree as ET
-from math import sin, cos, pi, degrees
+from math import sin, cos, atan2, pi, degrees
 
 from .chart import Point, progression
 from .canvas import Canvas
+
+def normalize_angle(x):
+    """Normalize an angle (radians) to -pi .. +pi.
+
+    Argument:
+    x -- angle, radians, to normalize.
+
+    This is not terribly efficient, but it is simple.
+    """
+    return atan2(sin(x),cos(x))
 
 class DonutStyle:
     """Class to create "donut" charts -- pie charts with a hole in the middle.
@@ -36,16 +46,16 @@ class DonutStyle:
         """Create a style for donut charts.
 
         Keyword Arguments:
-        border_size  -- relative thickness of wedge/hole/chart borders (default 0.01)
-        hole_size    -- relative width of central "donut hole" (default 0.3)
-        title_size   -- relative size (em-space) of title font (default 0.08)
-        label_size   -- relative size (em-space) of label font (default 0.08)
-        border_color -- stroke for wedge, hole, and boundary outlines (default "white")
-        hole_color   -- fill for donut hole (default "silver")
-        title_color  -- for title font (default "black")
-        label_color  -- for label font (default "white")
-        wedge_colors -- list-like for wedge fill color sequence
-        init_angle   -- start angle for first wedge, in radians. (0 is "East"; -pi/2 is "North")
+        border_size   -- relative thickness of wedge/hole/chart borders (default 0.01)
+        hole_size     -- relative width of central "donut hole" (default 0.3)
+        title_size    -- relative size (em-space) of title font (default 0.08)
+        label_size    -- relative size (em-space) of label font (default 0.08)
+        border_color  -- stroke for wedge, hole, and boundary outlines (default "white")
+        hole_color    -- fill for donut hole (default "silver")
+        title_color   -- for title font (default "black")
+        label_color   -- for label font (default "white")
+        wedge_colors  -- list-like for wedge fill color sequence
+        start_angle   -- initial angle for first wedge, in radians. (0 is "East"; -pi/2 is "North")
 
         The "size" arguments are relative to the overall chart size.  So, for example, 
         a hole_size of 0.25 would be 1/4 of the chart width (or height; it's square).  
@@ -59,7 +69,7 @@ class DonutStyle:
         starting with the first.  If there are more wedges than colors, the cycle will repeat.
         The default wedge colors are: ("red", "blue", "green", "orange", "teal", "brown", "magenta", "cyan").
 
-        The init_angle sets the position of the first wedge in the chart.  By default this is 
+        The start_angle sets the position of the first wedge in the chart.  By default this is 
         due North (or noon): -pi/2.  It may be more pleasing to start due East (at 0).
         """
         # The overall chart _size is arbitrary, for internal convenience.
@@ -78,13 +88,15 @@ class DonutStyle:
         self.title_color = "black"
         self.label_color = "white"
         self.wedge_colors = ("red", "blue", "green", "orange", "teal", "brown", "magenta", "cyan")
-        self.init_angle = -pi/2 # radians. 0 = East, so -pi/2 = North/noon
+        self.start_angle = -pi/2 # radians. 0 = East, so -pi/2 = North/noon
         
         for k,v in kwargs.items():
             if hasattr(self, k):
                 setattr(self, k, v)
             # perhaps we should warn about use of undefined settings?
 
+        self.start_angle = normalize_angle(self.start_angle)
+        
         # librsvg (what GNOME and gThumb and others use to render SVG) is picky about the font class string.
         # It _doesn't_ like a composite "font" attribute (it wants it broken up into -family, -weight, etc.).
         #
@@ -169,9 +181,9 @@ class DonutStyle:
         chart.append(styles)
         
         # calculate the points from the origin; offset when generating shapes.
-        init_angle = self.init_angle
-        prior_angle = init_angle
-        start = Point(center.x + r*cos(init_angle), center.y + r*sin(init_angle))
+        start_angle = self.start_angle
+        prior_angle = start_angle
+        start = Point(center.x + r*cos(start_angle), center.y + r*sin(start_angle))
         cum_weight = 0 # avoid rounding errors by accumulating values, not angles.
         
         path_data = "M {c.x},{c.y} L {p1.x},{p1.y} A {r},{r} 0 {large},1 {p2.x},{p2.y} Z"
@@ -181,7 +193,7 @@ class DonutStyle:
             item = ET.Element("g")
             
             cum_weight += weight
-            angle = init_angle + (cum_weight/total) * 2*pi
+            angle = start_angle + (cum_weight/total) * 2*pi
             finish = Point(center.x + r*cos(angle), center.y + r*sin(angle))
             if weight > total/2:
                 lg = 1
@@ -198,7 +210,7 @@ class DonutStyle:
             cy = center.y + (r_text * sin(bisect))
             # ... but rotated along the center line by the opts
             rotate = opts.get('rotate', False)
-            text_angle = degrees(bisect) if rotate else 0
+            text_angle = degrees(normalize_angle(bisect)) if rotate else 0
             # ... keep text right-side up; reflect angle at y-axis
             flip_xy = 1
             if not (-90 < text_angle < 90):

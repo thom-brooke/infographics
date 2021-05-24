@@ -110,17 +110,54 @@ Remembering how to format the data items with their presentation options can be 
 ```
 item1 = donuts.mk_wedge(25, "Fred")
 item2 = donuts.mk_wedge(5, "Barney", rotate=True, dx=-0.5)
-# or:
-data = [ mk_wedge(25, "George"), mk_wedge(5, "Jane", rotate=True) ]
 ```
 
 
 ### Customization
-lots of wedges; colors repeat
+The default style is reasonable, but some attributes may be tailored, if desired:
 
-tailoring the chart style.  sizes, colors, start angle
+* `border_size` (default 0.01)
+* `hole_size` (default 0.3)
+* `title_size` (default 0.08)
+* `label_size` (default 0.08)
+* `border_color` (default "white")
+* `hole_color` (default "silver")
+* `title_color` (default "black")
+* `label_color` (default "white")
+* `wedge_colors` (default ("red", "blue", "green", "orange", "teal", "brown", "magenta", "cyan"))
+* `start_angle` (default -pi/2)
 
-pie charts
+All sizes are relative to the overall chart size, so a hole size of 0.25 would be 1/4 of the chart width; a title size of 0.1 would be 1/10 the chart height, etc. (Donut charts are square: width = height)
+
+In general, colors are "CSS2 colors" (<https://www.w3.org/TR/2008/REC-CSS2-20080411/syndata.html#color-units>); in practice they may be any of the 147 SVG color names (see <https://www.december.com/html/spec/colorsvg.html>), or an RGB representation, as used in HTML or CSS.  for example: `rgb(100, 100, 0)` or `#A9A9A9`.
+
+The start angle is where the first wedge starts.  Normally, this is straight up (due North, noon, +y axis, etc.), but it may be more pleasing to start at 0 -- especially with thin wedges towards the end of the dataset.
+
+For example:
+```
+style = donuts.DonutStyle(hole_size=0.4,
+                          hole_color="darkseagreen",
+                          title_color="yellow",
+                          label_size=0.06,
+                          label_color="black",
+                          wedge_colors=("#909090", "#a0a0a0", "#b0b0b0", "#c0c0c0", "#d0d0d0", "#e0e0e0"),
+                          start_angle=0
+)
+
+data = [ donuts.mk_wedge(25, "Fee"),
+         donuts.mk_wedge(25, "Fi"),
+         donuts.mk_wedge(25, "Fo"),
+         donuts.mk_wedge(25, "Fum"),
+         donuts.mk_wedge(5, "smell", rotate=True, dx=0.5),
+]
+
+chart = style.generate(data, title="Giants")
+donuts.make_graphic(chart, "ex-custom.svg", width_cm=10)
+```
+
+![ex-custom](docs/figures/ex-custom.svg)
+
+Pie charts are just donut charts with a hole size of zero.
 
 ### Composition
 putting multiple charts together: the canvas
