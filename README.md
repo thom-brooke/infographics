@@ -160,7 +160,30 @@ donuts.make_graphic(chart, "ex-custom.svg", width_cm=10)
 Pie charts are just donut charts with a hole size of zero.
 
 ### Composition
-putting multiple charts together: the canvas
+Sometimes, one chart (or one graphic element) isn't enough.  For those situations, there's a `Canvas`.
+
+The canvas is the page on which several elements will be placed. For example, see the triple-chart above, illustrating the use of label rotation and position.  In fact, the `make_graphic` function, used in the earlier examples, simply creates a canvas the same size as the chart, places the chart on it, and saves the canvas.
+
+First create the overall page:
+```
+page = canvas.Canvas(width=10, height=5, units="cm")
+```
+
+Then place graphics or charts on it:
+```
+page.add_graphic(chart, width=5)
+page.add_graphic(chart, x=7, y=2, width=3)
+```
+
+The x/y offset is from the top left corner (default is 0/0), and the width and/or height is in canvas units.  By default, the canvas units are the same as the canvas size (here: width 10 and height 5), but they may be scaled, if convenient.
+
+Finally, write it to a file when finished:
+```
+page.write("ex-canvas.svg")
+```
+
+![ex-canvas](docs/figures/ex-canvas.svg)
+
 
 ### Annotations
 chart itself is svg element; canvas.svg member; can add elements manually (e.g., automation)

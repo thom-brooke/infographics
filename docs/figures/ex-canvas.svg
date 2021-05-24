@@ -1,0 +1,63 @@
+<?xml version="1.0" ?>
+<svg height="5cm" version="1.1" viewBox="0 0 10 5" width="10cm" xmlns="http://www.w3.org/2000/svg">
+  <svg height="5.0" viewBox="0 0 1000 1000" width="5" x="0" y="0">
+    <g stroke="white" stroke-width="10.0">
+      <style>.title {font-family:sans-serif;font-weight:bold;font-size:80.0px;dominant-baseline:middle;text-anchor:middle;stroke:none;fill:yellow;}
+.label {font-family:sans-serif;font-weight:bold;font-size:60.0px;dominant-baseline:middle;text-anchor:middle;stroke:none;fill:black;}</style>
+      <g>
+        <path d="M 500,500 L 1000.0,500.0 A 500,500 0 0,1 537.3650467932122,998.60189859059 Z" fill="#909090"/>
+        <text class="label" transform="translate(756.5681551404392 738.0604582198218) rotate(0)" x="0" y="0">Fee</text>
+      </g>
+      <g>
+        <path d="M 500,500 L 537.3650467932122,998.60189859059 A 500,500 0 0,1 5.584586887435762,574.5211330880874 Z" fill="#a0a0a0"/>
+        <text class="label" transform="translate(281.7785693494433 773.6410188638105) rotate(0)" x="0" y="0">Fi</text>
+      </g>
+      <g>
+        <path d="M 500,500 L 5.584586887435762,574.5211330880874 A 500,500 0 0,1 388.7395330218427,12.536043909088164 Z" fill="#b0b0b0"/>
+        <text class="label" transform="translate(210.8164289894017 302.8379796777324) rotate(0)" x="0" y="0">Fo</text>
+      </g>
+      <g>
+        <path d="M 500,500 L 388.7395330218427,12.536043909088164 A 500,500 0 0,1 977.7864028930703,352.62241279454764 Z" fill="#c0c0c0"/>
+        <text class="label" transform="translate(674.9999999999998 196.89110867544633) rotate(0)" x="0" y="0">Fum</text>
+      </g>
+      <g>
+        <path d="M 500,500 L 977.7864028930703,352.62241279454764 A 500,500 0 0,1 1000.0,499.9999999999999 Z" fill="#d0d0d0"/>
+        <text class="label" transform="translate(875.7557139655488 443.3639388530534) rotate(-8.57142857142862)" x="0" y="0">smell</text>
+      </g>
+      <g>
+        <circle cx="500" cy="500" fill="darkseagreen" r="200"/>
+        <text class="title" x="500" y="500">Giants</text>
+      </g>
+    </g>
+  </svg>
+  <svg height="3.0" viewBox="0 0 1000 1000" width="3" x="7" y="2">
+    <g stroke="white" stroke-width="10.0">
+      <style>.title {font-family:sans-serif;font-weight:bold;font-size:80.0px;dominant-baseline:middle;text-anchor:middle;stroke:none;fill:yellow;}
+.label {font-family:sans-serif;font-weight:bold;font-size:60.0px;dominant-baseline:middle;text-anchor:middle;stroke:none;fill:black;}</style>
+      <g>
+        <path d="M 500,500 L 1000.0,500.0 A 500,500 0 0,1 537.3650467932122,998.60189859059 Z" fill="#909090"/>
+        <text class="label" transform="translate(756.5681551404392 738.0604582198218) rotate(0)" x="0" y="0">Fee</text>
+      </g>
+      <g>
+        <path d="M 500,500 L 537.3650467932122,998.60189859059 A 500,500 0 0,1 5.584586887435762,574.5211330880874 Z" fill="#a0a0a0"/>
+        <text class="label" transform="translate(281.7785693494433 773.6410188638105) rotate(0)" x="0" y="0">Fi</text>
+      </g>
+      <g>
+        <path d="M 500,500 L 5.584586887435762,574.5211330880874 A 500,500 0 0,1 388.7395330218427,12.536043909088164 Z" fill="#b0b0b0"/>
+        <text class="label" transform="translate(210.8164289894017 302.8379796777324) rotate(0)" x="0" y="0">Fo</text>
+      </g>
+      <g>
+        <path d="M 500,500 L 388.7395330218427,12.536043909088164 A 500,500 0 0,1 977.7864028930703,352.62241279454764 Z" fill="#c0c0c0"/>
+        <text class="label" transform="translate(674.9999999999998 196.89110867544633) rotate(0)" x="0" y="0">Fum</text>
+      </g>
+      <g>
+        <path d="M 500,500 L 977.7864028930703,352.62241279454764 A 500,500 0 0,1 1000.0,499.9999999999999 Z" fill="#d0d0d0"/>
+        <text class="label" transform="translate(875.7557139655488 443.3639388530534) rotate(-8.57142857142862)" x="0" y="0">smell</text>
+      </g>
+      <g>
+        <circle cx="500" cy="500" fill="darkseagreen" r="200"/>
+        <text class="title" x="500" y="500">Giants</text>
+      </g>
+    </g>
+  </svg>
+</svg>
