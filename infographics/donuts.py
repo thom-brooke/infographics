@@ -72,9 +72,11 @@ class DonutStyle:
         The start_angle sets the position of the first wedge in the chart.  By default this is 
         due North (or noon): -pi/2.  It may be more pleasing to start due East (at 0).
         """
-        # The overall chart _size is arbitrary, for internal convenience.
+        # The overall chart size is arbitrary, for internal convenience.
         # All customization is relative to this, so its actual value is immaterial.
-        self._size = 1000 # units, width and height
+        # This is exposed so that clients can see what it is; there's no compelling reason
+        # for them to change it.
+        self.size = 1000 # units, width and height
 
         # Sizes relative to self.size
         self.border_size = 0.01
@@ -157,24 +159,24 @@ class DonutStyle:
         """
         wedges = progression(self.wedge_colors)
             
-        r = int(self._size/2)
+        r = int(self.size/2)
         center = Point(r, r)
 
         total = sum([item[0] for item in dataset])
 
-        r_hole = (self.hole_size * self._size)/2
+        r_hole = (self.hole_size * self.size)/2
         r_text = (r + r_hole)/2 # halfway between hole and edge
 
         svg = ET.Element("svg")
-        svg.set("viewBox", f"0 0 {self._size} {self._size}")
+        svg.set("viewBox", f"0 0 {self.size} {self.size}")
 
         chart = ET.Element("g")
         chart.set("stroke", self.border_color)
-        chart.set("stroke-width", str(self.border_size * self._size))
+        chart.set("stroke-width", str(self.border_size * self.size))
 
         styles = ET.Element("style")
-        title_size = (self.title_size * self._size)
-        label_size = (self.label_size * self._size)
+        title_size = (self.title_size * self.size)
+        label_size = (self.label_size * self.size)
         font_title = self.fontspec.format(cls="title", size=title_size, color=self.title_color)
         font_label = self.fontspec.format(cls="label", size=label_size, color=self.label_color)
         styles.text = "\n".join((font_title, font_label))
@@ -239,7 +241,7 @@ class DonutStyle:
             hole = ET.Element("circle")
             hole.set("cx", str(center.x))
             hole.set("cy", str(center.y))
-            hole.set("r", str(int((self.hole_size * self._size)/2)))
+            hole.set("r", str(int((self.hole_size * self.size)/2)))
             hole.set("fill", self.hole_color)
             item.append(hole)
 

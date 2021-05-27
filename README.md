@@ -186,11 +186,43 @@ page.write("ex-canvas.svg")
 
 
 ### Annotations
-chart itself is svg element; canvas.svg member; can add elements manually (e.g., automation)
+A chart itself is just an XML "svg" element; a canvas has a `svg` field which is also just an XML "svg" element.  These can be manipulated directly -- for example, to add annotations or to further customize their appearance.
 
-for one-off, better to use an editor
+This is not for the faint of heart; programmatically generating SVG is a fiddly business, better suited to automation than to one-off tweaks.  If you just want to add a little something to a chart or a canvas, use an SVG editor, instead.
 
-editing canvas and chart in Inkscape; adding charts to non-canvas drawings
+Still, it's just XML:
+```
+import xml.etree.ElementTree as ET
+
+chart = style.generate(data, title="Giant")
+
+bg = ET.Element("rect")
+bg.set("width", str(style.size))
+bg.set("height", str(style.size))
+bg.set("fill", "lavender")
+# don't cover up the chart with the background:
+chart.insert(0, bg)
+```
+Annotating the canvas is similar:
+```
+page = canvas.Canvas(width=10, height=5, units="cm", px_scale=100)
+page.add_graphic(chart, width=page.width/2)
+page.add_graphic(chart, x=(0.7*page.width), y=(0.4*page.height), width=(0.3*page.width))
+
+tag = ET.Element("text")
+tag.set("font-family", "sans-serif")
+tag.set("font-size", str(0.2*page.height))
+tag.set("fill", "red")
+tag.set("x", str(0.6*page.width))
+tag.set("y", str(0.25*page.height))
+tag.text = "Fancy"
+page.svg.append(tag)
+
+page.write("ex-annotate.svg")
+```
+Be careful:  by default, the canvas' user units are 1-to-1 with the given `width` and `height`.  Not all SVG libraries can handle this well for large display units (such as "cm").  The `px_scale` argument is an expansion factor for the width and height in user units.
+
+![ex-annotate](docs/figures/ex-annotate.svg)
 
 
 ## Considerations
@@ -199,40 +231,7 @@ Different SVG rendering libraries work differently.
 
 For example, some do not support the "dominant-baseline" attribute for text elements.  Which means that a label which is _supposed_ to be centered vertically on a reference line is instead aligned on its baseline (making it appear slightly "higher" than it should).
 
-## Reference
+Inkscape does not handle "untagged" nested SVG elements well.
 
-### Canvas
-The "canvas" is the sheet/page/container into which charts (etc.) are placed.
+A `Canvas` adds graphics as nested "svg" elements.  This is convenient, and perfectly valid.  However, Inkscape cannot modify these elements unless they have some magic attributes (which the `infographics` scripts don't provide).  Charts on a canvas, or a chart inserted into another Inkscape document, can't be moved or scaled or anything.  Inkscape will report that it "cannot transform an embedded SVG".  The solution is to double-click the chart, which will cause Inkscape to add the magic tags.  Then it can be edited just any other drawing object.
 
-construction
-
-add_graphic
-
-write. with or without DOCTYPE.
-
-### Charts
-
-TBS.
-
-generic considerations for all chart types (even though there's currently only one).
-
-style vs. object
-
-strategy for tailoring (sizes relative to "full").
-
-labels and how to adjust them (dx, dy "nudges")
-
-#### Pie and Donut Charts
-
-TBS.
-
-a pie chart is a donut chart with no hole.
-
-constructing a style
-
-generating a chart.  datasets.  labels and text.
-
-convenience function to fit and write a canvas to a chart
-
-
-![test](docs/figures/test-chart.svg)
